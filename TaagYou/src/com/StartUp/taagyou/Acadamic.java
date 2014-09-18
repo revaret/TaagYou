@@ -9,7 +9,7 @@ public class Acadamic extends Activity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		//chsngr
 		setContentView(R.layout.activity_acadamic);
 		
 	}
