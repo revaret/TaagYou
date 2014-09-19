@@ -18,22 +18,27 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ExpandableListView.OnChildClickListener;
 
 
-public class MainActivity extends ActionBarActivity {
+@SuppressLint("CutPasteId") public class MainActivity extends ActionBarActivity {
 	
 		ExpandableListAdapter listAdapter;
 		ExpandableListView mDrawerList;
 		List<String> listDataHeader;
 		HashMap<String, List<String>> listDataChild;
+		//LinearLayout container;
 	
 		//String []arrayMenu={"Acadamic","Bullettin Board","Discussion Centre","Documents","Fee Structure","School Bus","More"};
 	// Within which the entire activity is enclosed
@@ -68,7 +73,9 @@ public class MainActivity extends ActionBarActivity {
 			mDrawerList.setDividerHeight(5);
 			mDrawerList.setGroupIndicator(null);
 			mDrawerList.setClickable(true);
-
+			//container = (LinearLayout) findViewById(R.id.user_name);
+		
+			
 			// Getting reference to the ActionBarDrawerToggle
 			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 					R.drawable.ic_drawer, R.string.drawer_open,
@@ -96,8 +103,30 @@ public class MainActivity extends ActionBarActivity {
 			 
 	        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 	 
+	        // setting user name
+	        
+	        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	        final View addview = layoutInflater.inflate(R.layout.user_row, null);
+	        ImageView user_image = (ImageView)addview.findViewById(R.id.user_image);
+	        TextView user_name = (TextView)addview.findViewById(R.id.user_name);
+	        TextView user_standard = (TextView)addview.findViewById(R.id.user_standard);
+	        user_name.setText("Ranjith");
+	        user_standard.setText("10th");
+	       // container.addView(addview);
 	        // setting list adapter
+	        mDrawerList.addHeaderView(addview);
+	        user_name.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View arg0) {
+					Toast.makeText(getBaseContext(), "profile", Toast.LENGTH_LONG).show();
+					//gotoprofile
+				}
+			});
 	        mDrawerList.setAdapter(listAdapter);
+	       
+	        //mDrawerLayout.addView(addview);
+	        
 	        mDrawerList.setOnGroupClickListener(new OnGroupClickListener() {
 				
 				@Override
