@@ -4,8 +4,8 @@ public class Constants {
 	
 	//Data base name and version
 	
-		public static final String DATA_BASE_NAME ="TaagYou";
-		public static final int DATA_BASE_VERSION = 1;
+		public static final String DATA_BASE_NAME ="TaagYou.db";
+		public static final int DATA_BASE_VERSION = 2;
 		
 		//TABLE USER TYPE
 		public static final String USER_TYPE_ID = "id";
