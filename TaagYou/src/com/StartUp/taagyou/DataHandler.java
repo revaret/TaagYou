@@ -1,6 +1,9 @@
 package com.StartUp.taagyou;
 
 import java.io.ObjectOutputStream.PutField;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -27,16 +30,16 @@ public class DataHandler {
 	//TABLE_USER
 	public static final String  USER_ID ="id";
 	public static final String USER_TYPE_USER ="user_type";
-	public static final String USER_NAME ="user_name";
+	public static final String USER_NAME_ID ="user_name";
 	public static final String USER_PASSWORD ="password";
+	public static final String USER_NAME = "name";
 	public static final String TABLE_USER = "user_table";
-	public static final String TABLE_USER_CREATE = "CREATE TABLE user_table(id INTEGER PRIMARY KEY AUTOINCREMENT,user_type INTEGER NOT NULL,user_name TEXT NOT NULL,password TEXT NOT NULL );";
+	public static final String TABLE_USER_CREATE = "CREATE TABLE user_table(id INTEGER PRIMARY KEY AUTOINCREMENT,user_type INTEGER NOT NULL,user_name TEXT NOT NULL,password TEXT NOT NULL,name TEXT NOT NULL );";
 
 	//TABLE STUDENT
 	public static final String STUDENT_ID ="id";
 	public static final String STUDENT_USER_NAME = "user_name";
-	public static final String STUDENT_NAME = "name";
-	public static final String STUDENT_STANDARD = "standard";
+		public static final String STUDENT_STANDARD = "standard";
 	public static final String STUDENT_DIVISION ="division";
 	public static final String STUDENT_ROLLNO = "roll_number";
 	public static final String STUDENT_EMAIL = "student_email";
@@ -49,7 +52,7 @@ public class DataHandler {
 	public static final String STUDENT_PIC = "image";
 	public static final String TABLE_STUDENT = "student_table";
 	public static final String TABLE_STUDENT_CREATE = "CREATE TABLE student_table(id INTEGER PRIMARY KEY AUTOINCREMENT ,user_name INTEGER NOT NULL, " +
-			"name TEXT NOT NULL,standard INTEGER NOT NULL ,division TEXT NOT NULL,roll_number TEXT NOT NULL,student_email TEXT NOT NULL,"
+			"standard INTEGER NOT NULL ,division TEXT NOT NULL,roll_number TEXT NOT NULL,student_email TEXT NOT NULL,"
 			+"student_mobile TEXT NOT NULL, gender INTEGER NOT NULL,dob TEXT NOT NULL, parent_name TEXT NOT NULL, parent_email TEXT NOT NULL, " +
 			"parent_mobile TEXT NOT NULL,image TEXT NOT NULL);";
 	
@@ -186,26 +189,27 @@ public class DataHandler {
 	}
 
 	//INSERT USER
-	public long insertUser(Integer type,String name,String password)
+	public long insertUser(Integer type,String user_name,String password,String name)
 	{
 		ContentValues cv = new ContentValues();
 		cv.put(USER_TYPE_USER, type);
-		cv.put(USER_NAME, name);
+		cv.put(USER_NAME_ID, user_name);
 		cv.put(USER_PASSWORD, password);
+		cv.put(USER_NAME, name);
 		return db.insert(TABLE_USER, null, cv);
 	}
 
 	//INSERT STUDENT
-	public long insertStudent(Integer user_name,String name,Integer standard,String division,String rollno,String student_email,String student_mobile,String student_gender,String parent_name,String parent_email,String parent_mobile,String student_pic){
+	public long insertStudent(Integer user_name,Integer standard,String division,String rollno,String student_email,String student_mobile,String student_gender,String dob,String parent_name,String parent_email,String parent_mobile,String student_pic){
 		ContentValues cv = new ContentValues();
 		cv.put(STUDENT_USER_NAME, user_name);
-		cv.put(STUDENT_NAME, name);
 		cv.put(STUDENT_STANDARD, standard);
 		cv.put(STUDENT_DIVISION,division);
 		cv.put(STUDENT_ROLLNO, rollno);
 		cv.put(STUDENT_EMAIL, student_email);
 		cv.put(STUDENT_MOBILE, student_mobile);
 		cv.put(STUDENT_GENDER, student_gender);
+		cv.put(STUDENT_DOB, dob);
 		cv.put(STUDENT_PARENT_NAME, parent_name);
 		cv.put(STUDENT_PARENT_EMAIL, parent_email);
 		cv.put(STUDENT_PARENT_MOBILE, parent_mobile);
@@ -252,9 +256,10 @@ public class DataHandler {
 		return db.insert(TABLE_BULLETIN,null,cv);
 	}
 
-	public long insertComments(Integer user_name,String comment,Integer like){
+	public long insertComments(Integer user_name,Integer post_id,String comment,Integer like){
 		ContentValues cv = new ContentValues();
 		cv.put(COMMENTS_USER_ID, user_name);
+		cv.put(COMMENTS_POST_ID, post_id);
 		cv.put(COMMENTS_TEXT,comment);
 		cv.put(COMMENTS_LIKE, like);
 		return db.insert(TABLE_COMMENTS,null,cv);
@@ -276,7 +281,7 @@ public class DataHandler {
 	{
 		return db.query(TABLE_USER_TYPE, new String[]{USER_TYPE_ID , USER_TYPE },null, null, null, null, null);
 	}
-
+	
 
 
 
