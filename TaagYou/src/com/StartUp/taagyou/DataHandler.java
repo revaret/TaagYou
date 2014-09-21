@@ -312,7 +312,7 @@ public class DataHandler {
 	public Cursor getNotices(String ids)
 	{
 		Log.d("idsss", ids);
-		return db.query(TABLE_BULLETIN,new String[]{BULLETIN_TITLE,BULLETIN_CONTENT},BULLETIN_USER_ID+"=1 OR "+BULLETIN_USER_ID+" in "+ids,null,null,null,BULLETIN_DATE+" ASC");
+		return db.query(TABLE_BULLETIN,new String[]{BULLETIN_TITLE,BULLETIN_CONTENT,BULLETIN_DATE,BULLETIN_LIKE},BULLETIN_USER_ID+"=1 OR "+BULLETIN_USER_ID+" in "+ids,null,null,null,BULLETIN_DATE+" DESC");
 	}
 	
 	public String[] makeArray(Cursor crs,String coloumn){

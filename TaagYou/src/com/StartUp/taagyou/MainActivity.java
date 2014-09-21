@@ -49,7 +49,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 	String get_id,get_user_name,get_user_standard,get_user_image,get_user_division;
 	DataHandler handler;
 	LinearLayout container;
-	String[] admin_titles,admin_contents,student_titles,student_contents,student_ids;
+	String[] admin_titles,admin_contents,admin_dates,admin_likes,student_ids;
 	String  inClause;
 
 	//String []arrayMenu={"Acadamic","Bullettin Board","Discussion Centre","Documents","Fee Structure","School Bus","More"};
@@ -171,6 +171,8 @@ import android.widget.ExpandableListView.OnChildClickListener;
 		admin_titles = new String[100];
 		admin_contents = new String[100];
 		student_ids = new String[100];
+		admin_dates = new String[100];
+		admin_likes = new String[100];
 		
 		//get ids by class and division
 		handler.open();
@@ -195,12 +197,20 @@ import android.widget.ExpandableListView.OnChildClickListener;
 		//admin_content
 		handler.open();
 		Cursor admin_data_cursor_content = handler.getNotices(inClause);
-		admin_contents = handler.makeArray(admin_data_cursor_content, "content");
+		admin_dates = handler.makeArray(admin_data_cursor_content, "content");
 		handler.close();
 		
-		//student notice
-		student_titles = new String[100];
-		student_contents = new String[100];
+		//dates
+		handler.open();
+		Cursor bulletin_date= handler.getNotices(inClause);
+		admin_contents = handler.makeArray(bulletin_date, "date");
+		handler.close();
+		
+		//LIKE
+		handler.open();
+		Cursor bulletin_likes= handler.getNotices(inClause);
+		admin_likes = handler.makeArray(bulletin_likes, "likes");
+		handler.close();
 		
 		
 		
@@ -213,10 +223,14 @@ import android.widget.ExpandableListView.OnChildClickListener;
 			TextView notification_icon = (TextView) addview1.findViewById(R.id.icon_notification);
 			TextView notification_title = (TextView) addview1.findViewById(R.id.title_notification);
 			TextView notification_content = (TextView) addview1.findViewById(R.id.content_notification);
+			TextView notification_date = (TextView) addview1.findViewById(R.id.bulletin_date);
+			TextView notification_like = (TextView) addview1.findViewById(R.id.bulletin_likes);
 
 			notification_icon.setText(String.valueOf(admin_titles[i].charAt(0)).toUpperCase());
 			notification_title.setText(admin_titles[i]);
 			notification_content.setText(admin_contents[i]);
+			notification_date.setText(admin_dates[i]);
+			notification_like.setText(admin_likes[i]+" likes this");
 
 			container.addView(addview1);
 		}
