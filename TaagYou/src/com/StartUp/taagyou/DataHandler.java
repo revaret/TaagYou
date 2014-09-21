@@ -282,9 +282,49 @@ public class DataHandler {
 		return db.query(TABLE_USER_TYPE, new String[]{USER_TYPE_ID , USER_TYPE },null, null, null, null, null);
 	}
 	
-
-
-
+	public Cursor geUserByUsername(String username)
+	{
+		return db.query(TABLE_USER,new String[]{USER_ID,USER_NAME_ID,USER_NAME,USER_PASSWORD,USER_TYPE_USER},USER_NAME_ID+"=?",new String[]{username},null,null,null);
+	}
+	public Cursor geUserById(String id)
+	{
+		return db.query(TABLE_USER,new String[]{USER_ID,USER_NAME_ID,USER_NAME,USER_PASSWORD,USER_TYPE_USER},USER_ID+"=?",new String[]{id},null,null,null);
+	}
+	public Cursor getStudent(String id){
+		return db.query(TABLE_STUDENT, new String[]{STUDENT_STANDARD,STUDENT_DIVISION,STUDENT_ROLLNO,STUDENT_PIC}, STUDENT_USER_NAME+"=?", new String[]{id},null,null,null);
+	}
+	//get admin notification
+	public Cursor getAdminNoticeFromBulletin(){
+		return db.query(TABLE_BULLETIN,new String[]{BULLETIN_TITLE,BULLETIN_CONTENT},BULLETIN_USER_TYPE+"=?",new String[]{"1"},null,null,null);
+	}
+	
+	//get student_id class and division
+	public Cursor getStudentByStandardDivision(String standard,String division)
+	{
+		return db.query(TABLE_STUDENT, new String[]{STUDENT_USER_NAME},STUDENT_STANDARD+"=? AND "+STUDENT_DIVISION+"=?",new String[]{standard,division},null,null,null);
+	}
+	//get student notices by user_ids
+	public Cursor getNoticeByStudentIds(String ids)
+	{
+		return db.query(TABLE_BULLETIN,new String[]{BULLETIN_TITLE,BULLETIN_CONTENT},BULLETIN_USER_ID+"in ?",new String[]{ids},null,null,null);
+	}
+	
+	public Cursor getNotices(String ids)
+	{
+		Log.d("idsss", ids);
+		return db.query(TABLE_BULLETIN,new String[]{BULLETIN_TITLE,BULLETIN_CONTENT},BULLETIN_USER_ID+"=1 OR "+BULLETIN_USER_ID+" in "+ids,null,null,null,BULLETIN_DATE+" ASC");
+	}
+	
+	public String[] makeArray(Cursor crs,String coloumn){
+		String[] array = new String[crs.getCount()];
+		int i = 0;
+		while(crs.moveToNext()){
+		    String uname = crs.getString(crs.getColumnIndex(coloumn));
+		    array[i] = uname;
+		    i++;
+		}
+	    return array;
+	}
 
 }
 

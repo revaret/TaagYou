@@ -14,30 +14,26 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF" >
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Large Text"
-            android:textColor="#000000"
-            android:textSize="100sp"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+        <ScrollView
+            android:id="@+id/scrollView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+             >
+
+            <LinearLayout
+                android:id="@+id/notifications"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                
+                >
+            </LinearLayout>
+        </ScrollView>
 
     </FrameLayout>
     <!-- The navigation drawer -->
 	
-<!-- 	 <LinearLayout -->
-<!--             android:id="@+id/user_name" -->
-<!--             android:layout_width="fill_parent" -->
-<!--             android:layout_height="match_parent" -->
-<!--             android:layout_above="@+id/drawer_list" -->
-<!--             android:layout_alignParentLeft="true" -->
-<!--             android:layout_alignParentRight="true" -->
-<!--             android:orientation="vertical" -->
-            
-<!--              > -->
-        
-<!-- 	    </LinearLayout> -->
+	 
       
      
     <ExpandableListView

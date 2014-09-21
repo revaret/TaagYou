@@ -18,6 +18,7 @@ public class LoginActivity extends ActionBarActivity {
 	Button login;
 	EditText username,password;
 	DataHandler handler;
+	String getuserpassword,get_id;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -227,20 +228,33 @@ public class LoginActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View arg0) {
 				//check username and password 
-				Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-				//pass username in intent
-				
-				//checking 
+				String getUserName = username.getText().toString();
+				String getPassword = password.getText().toString();
 				handler.open();
-				Cursor cursor = handler.returnUserType();
+				Cursor cursor = handler.geUserByUsername(getUserName);
 				if(cursor.moveToFirst())
 				{
 					do{
-						Toast.makeText(getBaseContext(), cursor.getString(0),Toast.LENGTH_SHORT).show();
-						Toast.makeText(getBaseContext(), cursor.getString(1),Toast.LENGTH_SHORT).show();
+						get_id = cursor.getString(0);
+						getuserpassword = cursor.getString(3);
 					}while(cursor.moveToNext());
+					if(getPassword.equals(getuserpassword))
+					{
+						Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+						intent.putExtra("user_id",get_id);
+						startActivity(intent);
+					}
+					else
+					{
+						Toast.makeText(getBaseContext(),"Password mismatch", Toast.LENGTH_LONG).show();
+					}
+				}else
+				{
+					Toast.makeText(getBaseContext(), "user not found", Toast.LENGTH_LONG).show();
 				}
-				startActivity(intent);
+				
+				
+			
 				
 			}
 		});
